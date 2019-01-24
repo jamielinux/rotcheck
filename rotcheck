@@ -134,9 +134,11 @@ done; shift $((OPTIND-1))
 
 MODE=$((APPEND_MODE+CHECK_MODE+DELETE_MODE+UPDATE_MODE))
 if [ $MODE -eq 0 ]; then
-    fail "Please specify one of -a, -c, -d, or -u."
+    fail "Please specify one of -a, -c, -d, or -u." \
+         "See \`rotcheck -h\` for help with usage."
 elif [ $MODE -gt 1 ]; then
-    fail "You can only use one of -a, -c, -d, or -u options."
+    fail "You can only use one of -a, -c, -d, or -u options." \
+         "See \`rotcheck -h\` for help with usage."
 fi
 
 if [ $CHECK_MODE -eq 1 ] || [ $DELETE_MODE -eq 1 ]; then
