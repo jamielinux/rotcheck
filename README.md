@@ -49,7 +49,8 @@ MODES:
 
 OPTIONS:
  -b COMMAND   Checksum command to use. Default: sha512sum
- -f FILE      File to store checksums. Default: ./.rotcheck
+ -f FILE      File to store checksums. For relative paths, prefix with "./"
+              or the checksum file will be checksummed. Default: ./.rotcheck
  -h           Display this help.
  -n           Don't follow symlinks. The default is to follow symlinks.
  -q           Suppress "OK" messages when checking checksums.
