@@ -144,16 +144,12 @@ if [ $MODE -eq 0 ]; then
 elif [ $MODE -gt 1 ]; then
     fail "You can only use one of -a, -c, -d, or -u options." \
          "See \`rotcheck -h\` for help with usage."
-fi
-
-if [ $CHECK_MODE -eq 1 ] || [ $DELETE_MODE -eq 1 ]; then
+elif [ $CHECK_MODE -eq 1 ] || [ $DELETE_MODE -eq 1 ]; then
     if [ ! -f "$CHECKFILE" ]; then
         fail "$CHECKFILE: No such file." \
              "Try running \`rotcheck -a\` first, or see \`rotcheck -h\`."
     fi
-fi
-
-if ! command -v "$COMMAND" >/dev/null 2>/dev/null; then
+elif ! command -v "$COMMAND" >/dev/null 2>/dev/null; then
     fail "$COMMAND: command not found" \
          "Try specifying a supported command using \`rotcheck -b COMMAND\`." \
          "You may need to install GNU coreutils or BusyBox." \
