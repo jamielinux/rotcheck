@@ -70,7 +70,6 @@ sha512sum: WARNING: 1 of 49231 computed checksums did NOT match
 ## Full help text
 
 ```
-rotcheck $VERSION
 Usage: rotcheck MODE [OPTIONS]
    or: rotcheck MODE [OPTIONS] -- [DIRECTORY]... [ARBITRARY FIND OPTION]...
 Recursively generate, update and verify checksums.
@@ -123,7 +122,8 @@ Examples:
   # You've added some new files and need to append some checksums:
   rotcheck -va
 
-  # You've edited some files and need to update the checksums:
+  # You've edited some files and need to update the checksums (for files with
+  # a modification time newer than the checksum file):
   rotcheck -vu
 
   # Verify checksums:

@@ -82,7 +82,8 @@ Examples:
   # You've added some new files and need to append some checksums:
   rotcheck -va
 
-  # You've edited some files and need to update the checksums:
+  # You've edited some files and need to update the checksums (for files with
+  # a modification time newer than the checksum file):
   rotcheck -vu
 
   # Verify checksums:
