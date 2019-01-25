@@ -91,7 +91,7 @@ Examples:
   rotcheck -a -- /mnt/archive-2018/ /mnt/archive-2019/
 
   # Exclude .git folders (these arguments are passed directly to find):
-  rotcheck -a -- ! -path '*/.git/*'
+  rotcheck -a -- ! -path '*/\\.git/*'
 
 EOF
     exit 0
