@@ -22,7 +22,6 @@ UPDATE_MODE=0
 
 IGNORE_MISSING=0
 FOLLOW_SYMLINKS=1
-QUIET=0
 VERBOSE=0
 WARN_FORMATTING=0
 EXCLUDE_HIDDEN=0
@@ -49,8 +48,8 @@ OPTIONS:
  -f FILE      File to store checksums. Default: ./.rotcheck
  -h           Display this help.
  -n           Don't follow symlinks. The default is to follow symlinks.
- -q           Suppress "OK" messages when checking checksums.
- -v           Be more verbose when adding, deleting or changing checksums.
+ -v           Be more verbose when adding, deleting, changing or verifying
+              checksums.
  -w           Warn about improperly formatted checksum lines.
  -x           Exclude all hidden files and directories when generating
               checksums. The default is to include them.
@@ -117,7 +116,7 @@ fi
 
 # Command-line arguments. `getopts` is POSIX, while `getopt` is not.
 [ $# -gt 0 ] && [ "$1" = "--help" ] && usage
-while getopts ":acdub:f:hinqvwxM" opt; do
+while getopts ":acdub:f:hinvwxM" opt; do
     case "$opt" in
         a)  APPEND_MODE=1;;
         c)  CHECK_MODE=1;;
@@ -128,7 +127,6 @@ while getopts ":acdub:f:hinqvwxM" opt; do
         h)  usage;;
         i)  IGNORE_MISSING=1;;
         n)  FOLLOW_SYMLINKS=0;;
-        q)  QUIET=1;;
         v)  VERBOSE=1;;
         w)  WARN_FORMATTING=1;;
         x)  EXCLUDE_HIDDEN=1;;
@@ -179,7 +177,7 @@ if [ $CHECK_MODE -eq 1 ]; then
     # Unfortunately, pipefail isn't POSIX so to return the exit status from the
     # checksum command, we have to be clever (aka crazy) with file descriptors
     # and subshells instead.
-    if [ $QUIET -eq 0 ]; then
+    if [ $VERBOSE -eq 1 ]; then
         verify_checksums
         exit $?
     else
