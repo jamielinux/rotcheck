@@ -276,6 +276,10 @@ if [ $UPDATE_MODE -eq 1 ] && [ -f "$CHECKFILE" ]; then
         else
             old="$(sed -n -e "${line_num}p" "$CHECKFILE" | cut -d ' ' -f 1)"
             new="$($COMMAND -- "$file")"
+            # Should never happen, but double check these aren't empty:
+            if [ -z ${old:+x} ] || [ -z ${new:+x} ]; then
+                continue
+            fi
             # `sed -i` isn't POSIX (nor is `mktemp`), so use `ex` instead.
             if [ "$old" != "${new%% *}" ]; then
                 cat << EOF | ex -s -- "$CHECKFILE"
