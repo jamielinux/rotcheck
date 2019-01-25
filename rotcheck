@@ -57,7 +57,7 @@ OPTIONS:
               WARNING: The checksums might have changed due to bit rot so
               use this option with care!
 
- (specific to GNU coreutils)
+ (specific to GNU coreutils >= 8.25)
  -i           Ignore missing files when verifying checksums.
 
 
