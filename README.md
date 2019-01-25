@@ -29,6 +29,7 @@ to somewhere in your `$PATH`. For example:
 curl -O https://raw.githubusercontent.com/jamielinux/rotcheck/master/rotcheck
 sudo cp rotcheck /usr/local/bin/rotcheck
 sudo chmod +x /usr/local/bin/rotcheck
+rotcheck -h
 ```
 
 # Usage
