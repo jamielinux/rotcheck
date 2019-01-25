@@ -1,7 +1,7 @@
 # rotcheck
 
-A simple shell script to recursively generate checksums for files you care
-about and verify them. It's **useful for detecting bit rot**.
+A simple shell script to **recursively generate, update and verify checksums**
+for files you care about. It's **useful for detecting bit rot**.
 
 It's written in POSIX shell, but requires GNU coreutils, BusyBox or some other
 collection that includes similar checksum tools.
