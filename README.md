@@ -34,6 +34,33 @@ rotcheck -h
 
 # Usage
 
+Create first checksum file (located at `./.rotcheck`):
+
+```shell
+$ cd /backups
+$ rotcheck -a
+```
+
+You've added some new files and need to append some checksums:
+
+```shell
+$ cd /backups
+$ rotcheck -av
+ADDED: ./backups/foo/bar.tar.gz
+ADDED: ./backups/foo/foo.tar.gz
+```
+
+Verify checksums:
+
+```shell
+$ cd /backups
+$ rotcheck -c
+./backups/foo/bitrot.tar.gz: FAILED
+sha512sum: WARNING: 1 of 49231 computed checksums did NOT match
+```
+
+## Full help text
+
 ```
 Usage: rotcheck MODE [OPTIONS]
    or: rotcheck MODE [OPTIONS] -- [DIRECTORY]... [ARBITRARY FIND OPTION]...
@@ -54,8 +81,8 @@ OPTIONS:
               or the checksum file will be checksummed. Default: ./.rotcheck
  -h           Display this help.
  -n           Don't follow symlinks. The default is to follow symlinks.
- -q           Suppress "OK" messages when checking checksums.
- -v           Be more verbose when adding, deleting or changing checksums.
+ -v           Be more verbose when adding, deleting, changing or verifying
+              checksums.
  -w           Warn about improperly formatted checksum lines.
  -x           Exclude all hidden files and directories when generating
               checksums. The default is to include them.
