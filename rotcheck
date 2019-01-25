@@ -11,7 +11,7 @@ LC_ALL="C"
 # It's written in POSIX shell, but requires GNU coreutils, BusyBox or some
 # other collection that includes similar checksum tools.
 
-VERSION=1.1.1
+VERSION=1.1.2
 COMMAND="sha512sum"
 CHECKFILE="./.rotcheck"
 
