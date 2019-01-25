@@ -76,17 +76,17 @@ Supported commands:
 
 
 Examples:
-  # Generate checksums for the first time, storing in ./.rotcheck file.
-  # If ./.rotcheck exists, append checksums for files with no checksum yet.
+  # Create checksum file (located at "./.rotcheck"):
   rotcheck -a
 
-  # Verify checksums in the ./.rotcheck file:
-  rotcheck -c
+  # You've added some new files and need to append some checksums:
+  rotcheck -va
 
-  # Regenerate checksums with b2sum (BLAKE2) instead of sha512sum:
-  rm ./.rotcheck
-  rotcheck -b b2sum -a
-  rotcheck -b b2sum -c
+  # You've edited some files and need to update the checksums:
+  rotcheck -vu
+
+  # Verify checksums:
+  rotcheck -c
 
   # Search other directories instead of the current directory.
   # WARNING: checksums might get duplicated if mixing relative and absolute

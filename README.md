@@ -46,8 +46,16 @@ You've added some new files and need to append some checksums:
 ```shell
 $ cd /backups
 $ rotcheck -av
-ADDED: ./backups/foo/bar.tar.gz
-ADDED: ./backups/foo/foo.tar.gz
+ADDED: ./backups/foo/one.tar.gz
+ADDED: ./backups/foo/two.tar.gz
+```
+
+You've edited some files and need to update the checksums:
+
+```shell
+$ cd /backups
+$ rotcheck -uv
+CHANGED: ./backups/bar/three.tar.gz
 ```
 
 Verify checksums:
@@ -55,13 +63,14 @@ Verify checksums:
 ```shell
 $ cd /backups
 $ rotcheck -c
-./backups/foo/bitrot.tar.gz: FAILED
+./backups/baz/bitrot.tar.gz: FAILED
 sha512sum: WARNING: 1 of 49231 computed checksums did NOT match
 ```
 
 ## Full help text
 
 ```
+rotcheck $VERSION
 Usage: rotcheck MODE [OPTIONS]
    or: rotcheck MODE [OPTIONS] -- [DIRECTORY]... [ARBITRARY FIND OPTION]...
 Recursively generate, update and verify checksums.
@@ -108,17 +117,17 @@ Supported commands:
 
 
 Examples:
-  # Generate checksums for the first time, storing in ./.rotcheck file.
-  # If ./.rotcheck exists, append checksums for files with no checksum yet.
+  # Create checksum file (located at "./.rotcheck"):
   rotcheck -a
 
-  # Verify checksums in the ./.rotcheck file:
-  rotcheck -c
+  # You've added some new files and need to append some checksums:
+  rotcheck -va
 
-  # Regenerate checksums with b2sum (BLAKE2) instead of sha512sum:
-  rm ./.rotcheck
-  rotcheck -b b2sum -a
-  rotcheck -b b2sum -c
+  # You've edited some files and need to update the checksums:
+  rotcheck -vu
+
+  # Verify checksums:
+  rotcheck -c
 
   # Search other directories instead of the current directory.
   # WARNING: checksums might get duplicated if mixing relative and absolute
