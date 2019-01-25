@@ -13,8 +13,8 @@ to edit the code for your own needs.
 
 ## Disadvantages compared with other tools
 
-Verifying checksums is just as fast as any other tool, but generating
-or updating checksums is slower (because it's POSIX shell).
+Verifying checksums is just as fast as any other tool, but generating or
+updating checksums is slower (because it's POSIX shell).
 
 Maybe use a faster tool if you have millions of files and regularly update your
 checksums.
@@ -55,9 +55,11 @@ OPTIONS:
  -q           Suppress "OK" messages when checking checksums.
  -v           Be more verbose when adding, deleting or changing checksums.
  -w           Warn about improperly formatted checksum lines.
+ -x           Exclude all hidden files and directories when generating
+              checksums. The default is to include them.
  -M           Use with `-u` to update checksums regardless of modification
-              time. This is *much* slower so avoid if possible; try using
-              `touch` instead to bump the modification time of the file.
+              time. This is very slow so avoid if possible; try `touch`
+              instead to bump the modification time of specific files.
               WARNING: The checksums might have changed due to bit rot so
               use this option with care!
 
@@ -95,6 +97,6 @@ Examples:
   rotcheck -a -- /mnt/archive-2018/ /mnt/archive-2019/
 
   # Exclude .git folders (these arguments are passed directly to find):
-  rotcheck -a -- ! -path '*/.git/*'
+  rotcheck -a -- ! -path '*/\.git/*'
 
 ```
