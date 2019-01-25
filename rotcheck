@@ -65,7 +65,7 @@ Supported commands:
   GNU coreutils:
     md5sum, sha1sum, sha224sum, sha256sum, sha384sum, sha512sum, b2sum
 
-  BusyBox:
+  BusyBox (applets must be symlinked):
     md5sum, sha1sum, sha256sum, sha512sum, sha3sum
 
   BSD & macOS (install GNU coreutils):
