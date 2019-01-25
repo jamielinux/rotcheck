@@ -132,9 +132,12 @@ while getopts ":acdub:f:hinqvwM" opt; do
         \?) fail "-$OPTARG: Invalid argument";;
         :)  fail "-$OPTARG requires an argument";;
     esac
-done; shift $((OPTIND-1))
+done; shift $(($OPTIND - 1))
 
-MODE=$((APPEND_MODE+CHECK_MODE+DELETE_MODE+UPDATE_MODE))
+
+
+# A few sanity checks.
+MODE=$(($APPEND_MODE + $CHECK_MODE + $DELETE_MODE + $UPDATE_MODE))
 if [ $MODE -eq 0 ]; then
     fail "Please specify one of -a, -c, -d, or -u." \
          "See \`rotcheck -h\` for help with usage."
@@ -196,7 +199,7 @@ EOF
             fi
         else
             # Only increment the line number if we didn't delete a line.
-            i=$((i+1))
+            i=$(($i + 1))
         fi
     done
     exit $?
