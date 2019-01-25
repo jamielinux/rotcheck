@@ -151,9 +151,11 @@ if [ $CHECK_MODE -eq 1 ] || [ $DELETE_MODE -eq 1 ]; then
 fi
 
 if ! command -v "$COMMAND" >/dev/null 2>/dev/null; then
-    fail "$COMMAND: not found" \
-         "Try installing GNU coreutils or BusyBox." \
-         "On *BSD, GNU coreutils commands begin with 'g', like 'gsha512sum'."
+    fail "$COMMAND: command not found" \
+         "Try specifying a supported command using \`rotcheck -b COMMAND\`." \
+         "You may need to install GNU coreutils or BusyBox." \
+         "On *BSD, GNU coreutils commands begin with 'g', like 'gsha512sum'." \
+         "See \`rotcheck -h\` for help with usage."
 fi
 
 # When printing text to terminal, make sure it won't do anything unexpected.
