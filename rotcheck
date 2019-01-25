@@ -68,8 +68,8 @@ Supported commands:
   BusyBox:
     md5sum, sha1sum, sha256sum, sha512sum, sha3sum
 
-  macOS:
-    shasum (or \`brew install coreutils\` for more commands)
+  BSD & macOS (install GNU coreutils):
+    gmd5sum, gsha1sum, gsha224sum, gsha256sum, gsha384sum, gsha512sum, gb2sum
 
 
 Examples:
@@ -85,7 +85,9 @@ Examples:
   rotcheck -b b2sum -a
   rotcheck -b b2sum -c
 
-  # Instead of the current directory, specify other directories to traverse:
+  # Search other directories instead of the current directory.
+  # WARNING: checksums might get duplicated if mixing relative and absolute
+  # paths, or if you change the way you specify directory paths!
   rotcheck -a -- /mnt/archive-2018/ /mnt/archive-2019/
 
   # Exclude .git folders (these arguments are passed directly to find):
