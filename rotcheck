@@ -25,6 +25,7 @@ FOLLOW_SYMLINKS=1
 QUIET=0
 VERBOSE=0
 WARN_FORMATTING=0
+EXCLUDE_HIDDEN=0
 FORCE_UPDATE=0
 
 usage() {
@@ -51,9 +52,11 @@ OPTIONS:
  -q           Suppress "OK" messages when checking checksums.
  -v           Be more verbose when adding, deleting or changing checksums.
  -w           Warn about improperly formatted checksum lines.
+ -x           Exclude all hidden files and directories when generating
+              checksums. The default is to include them.
  -M           Use with \`-u\` to update checksums regardless of modification
-              time. This is *much* slower so avoid if possible; try using
-              \`touch\` instead to bump the modification time of the file.
+              time. This is very slow so avoid if possible; try \`touch\`
+              instead to bump the modification time of specific files.
               WARNING: The checksums might have changed due to bit rot so
               use this option with care!
 
@@ -114,7 +117,7 @@ fi
 
 # Command-line arguments. `getopts` is POSIX, while `getopt` is not.
 [ $# -gt 0 ] && [ "$1" = "--help" ] && usage
-while getopts ":acdub:f:hinqvwM" opt; do
+while getopts ":acdub:f:hinqvwxM" opt; do
     case "$opt" in
         a)  APPEND_MODE=1;;
         c)  CHECK_MODE=1;;
@@ -128,6 +131,7 @@ while getopts ":acdub:f:hinqvwM" opt; do
         q)  QUIET=1;;
         v)  VERBOSE=1;;
         w)  WARN_FORMATTING=1;;
+        x)  EXCLUDE_HIDDEN=1;;
         M)  FORCE_UPDATE=1;;
         \?) fail "-$OPTARG: Invalid argument";;
         :)  fail "-$OPTARG requires an argument";;
@@ -243,7 +247,11 @@ find_safe() {
         fi
     fi
 
-    find $FIND_L $FIND_DOT "$@" $FIND_FOLLOW -type f ! -path "$CHECKFILE" \
+    HIDDEN=""
+    [ $EXCLUDE_HIDDEN -eq 1 ] && HIDDEN='*/\.*'
+
+    find $FIND_L $FIND_DOT "$@" $FIND_FOLLOW \
+        -type f ! -path "$CHECKFILE" ! -path "$HIDDEN" \
         ! -name "$(printf '*%b*' '\0001')" ! -name "$(printf '*%b*' '\0002')" \
         ! -name "$(printf '*%b*' '\0003')" ! -name "$(printf '*%b*' '\0004')" \
         ! -name "$(printf '*%b*' '\0005')" ! -name "$(printf '*%b*' '\0006')" \
