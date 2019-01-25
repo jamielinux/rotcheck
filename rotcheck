@@ -295,6 +295,9 @@ $new
 .
 x
 EOF
+                # Bail immediately if something went wrong.
+                [ $? -ne 0 ] && fail "Failed to update checksum file."
+
                 # Print what checksums were changed.
                 if [ $VERBOSE -eq 1 ]; then
                     printf '%s' "CHANGED: "
@@ -313,7 +316,9 @@ if [ $APPEND_MODE -eq 1 ] || [ $UPDATE_MODE -eq 1 ]; then
         # than just cut+grep here.
         if [ ! -f "$CHECKFILE" ] || ! grep -- "$file" "$CHECKFILE" \
                             | cut -d ' ' -f 3- | grep -Fxq -- "$file"; then
-            $COMMAND -- "$file" >> "$CHECKFILE"
+            if ! $COMMAND -- "$file" >> "$CHECKFILE"; then
+                fail "Failed to write to checksum file."
+            fi
 
             # Print what checksums were appended.
             if [ $VERBOSE -eq 1 ]; then
