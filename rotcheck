@@ -255,7 +255,7 @@ find_updated_files() {
 get_line_number() {
     # Avoid `grep -E` as filename characters might get interpreted (eg, $).
     for l in $(grep -Fn -- "$file" "$CHECKFILE" | cut -d ':' -f 1); do
-        if sed -n "${l}p" "$CHECKFILE" \
+        if sed -n -e "${l}p" -- "$CHECKFILE" \
                 | cut -d ' ' -f 3- | grep -Fxq -- "$file" >/dev/null; then
             printf '%d' "$l"
             return 0
@@ -274,7 +274,7 @@ if [ $UPDATE_MODE -eq 1 ] && [ -f "$CHECKFILE" ]; then
             # No checksum yet, so append one.
             $COMMAND -- "$file" >> "$CHECKFILE"
         else
-            old="$(sed -n "${line_num}p" -- "$CHECKFILE" | cut -d ' ' -f 1)"
+            old="$(sed -n -e "${line_num}p" "$CHECKFILE" | cut -d ' ' -f 1)"
             new="$($COMMAND -- "$file")"
             # `sed -i` isn't POSIX (nor is `mktemp`), so use `ex` instead.
             if [ "$old" != "${new%% *}" ]; then
