@@ -208,7 +208,20 @@ find_safe() {
         fi
     fi
 
-    find $FIND_L "$@" $FIND_FOLLOW -type f ! -path "$CHECKFILE" \
+    # POSIX find requires that you specify the search path either first
+    # or immediately after -H/-L. Use current directory by default unless
+    # user has specified a path.
+    FIND_DOT="./"
+    if [ $# -gt 0 ]; then
+        first_char="$(printf '%s' "$1" | cut -c 1)"
+        # Replace search path unless first arg is a non-path `find` option.
+        if [ "$first_char" != "-" ] \
+                && [ "$first_char" != "!" ] && [ "$first_char" != "(" ]; then
+            FIND_DOT=""
+        fi
+    fi
+
+    find $FIND_L $FIND_DOT "$@" $FIND_FOLLOW -type f ! -path "$CHECKFILE" \
         ! -name "$(printf '*%b*' '\0001')" ! -name "$(printf '*%b*' '\0002')" \
         ! -name "$(printf '*%b*' '\0003')" ! -name "$(printf '*%b*' '\0004')" \
         ! -name "$(printf '*%b*' '\0005')" ! -name "$(printf '*%b*' '\0006')" \
