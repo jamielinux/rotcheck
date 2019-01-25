@@ -39,13 +39,13 @@ Usage: rotcheck MODE [OPTIONS]
 Recursively generate, update and verify checksums.
 
 MODES:
- -a           APPEND-ONLY mode: Record checksums for any files without
-              a checksum already. Never modify existing checksums.
- -c           CHECK-ONLY mode: Check that files checksums are the same.
+ -a           APPEND mode: Record checksums for any files without a checksum
+              already. Never modify existing checksums.
+ -c           CHECK mode: Check that files checksums are the same.
  -d           DELETE mode: Remove checksums for files that don't exist.
- -u           APPEND-AND-UPDATE mode: Like append-only mode, but also
-              update checksums for files with a modification date newer
-              than the checksum file. (NB: Also see `-M`.)
+ -u           APPEND-AND-UPDATE mode: Like append-only mode, but also update
+              checksums for files with a modification date newer than the
+              the checksum file. (NB: Also see `-M`.)
 
 OPTIONS:
  -b COMMAND   Checksum command to use. Default: sha512sum
